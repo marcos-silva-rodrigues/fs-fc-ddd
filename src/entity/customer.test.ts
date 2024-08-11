@@ -42,7 +42,7 @@ describe("Customer unit tests", () => {
 
         expect(() => {
             customer.activate();
-        }).toThrow("Address is mandatory toa activate a customer");
+        }).toThrow("Address is mandatory to activate a customer");
     });
 
 });
