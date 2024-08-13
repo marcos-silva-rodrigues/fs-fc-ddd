@@ -2,5 +2,5 @@ services:
   app:
     build: .
     volumes:
-      - /home/app/node_modules
+      - ./node_modules:/home/app/node_modules
       - .:/home/app
