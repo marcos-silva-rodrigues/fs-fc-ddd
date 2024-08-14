@@ -5,10 +5,10 @@ import {
   Column,
   ForeignKey,
   BelongsTo,
-  HasMany
+  HasMany,
 } from "sequelize-typescript";
 import CustomerModel from "./customer.model";
-import OrderItemsModel from "./order-item.model";
+import OrderItemModel from "./order-item.model";
 
 @Table({
   tableName: "orders",
@@ -23,12 +23,12 @@ export default class OrderModel extends Model {
   @Column({ allowNull: false })
   declare customer_id: string;
 
+  @Column({ allowNull: false })
+  declare total: number;
+
   @BelongsTo(() => CustomerModel)
   declare customer: CustomerModel;
 
-  @HasMany(() => OrderItemsModel)
-  declare items: OrderItemsModel[];
-
-  @Column({ allowNull: false })
-  declare total: number
+  @HasMany(() => OrderItemModel, {hooks: true, onDelete: "Cascade", onUpdate: "Cascade"})
+  declare items: OrderItemModel[];
 }

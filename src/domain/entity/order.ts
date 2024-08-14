@@ -7,12 +7,27 @@ export class Order {
     private _items: OrderItem[];
     private _total: number
 
-    constructor(id: string, customerId: string, _items: OrderItem[]) {
+    constructor(id: string, customerId: string, items: OrderItem[]) {
         this._id = id;
         this._customerId = customerId;
-        this._items = _items;
+        this._items = items.map(item => {
+            item.fromOrder(this);
+            return item;
+        });
         this._total = this.total();
         this.validate();
+    }
+
+    get id(): string {
+        return this._id;
+    }
+
+    get customerId(): string {
+        return this._customerId;
+    }
+
+    get items(): OrderItem[] {
+        return this._items;
     }
 
     validate() {
@@ -35,5 +50,10 @@ export class Order {
             .reduce((acc, item) =>
                 acc + item.orderItemTotal()
             , 0);
+    }
+
+    addItem(orderItem: OrderItem){
+        orderItem.fromOrder(this);
+        this._items.push(orderItem);
     }
 }
