@@ -193,4 +193,37 @@ describe("Order repository test", () => {
 
   });
 
+  it("should find all order", async () => {
+    const product = await setupProductAndCustomer();
+    const orderItem = new OrderItem(
+      "1",
+      product.id,
+      product.name,
+      product.price,
+      2
+    );
+
+    const orderItem2 = new OrderItem(
+      "2",
+      product.id,
+      product.name,
+      product.price,
+      3
+    );
+
+    const order = new Order("123", "123", [orderItem]);
+
+    const order2 = new Order("321", "123", [orderItem2]);
+    
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+    await orderRepository.create(order2);
+
+    const foundOrders = await orderRepository.findAll();
+
+    expect(foundOrders).toHaveLength(2);
+    expect(foundOrders).toContainEqual(order);
+    expect(foundOrders).toContainEqual(order2);
+  });
+
 });
