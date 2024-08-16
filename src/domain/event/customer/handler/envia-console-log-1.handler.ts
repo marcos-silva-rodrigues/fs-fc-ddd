@@ -1,10 +1,10 @@
 import EventHandlerInterface from "../../@shared/event-handler.interface";
-import ProductCreatedEvent from "../customer-created.event";
+import CustomerCreatedEvent from "../customer-created.event";
 
-export default class SendEmailWhenProductIsCreatedHandler 
-    implements EventHandlerInterface<ProductCreatedEvent> {
+export default class EnviaConsoleLog1Handler 
+    implements EventHandlerInterface<CustomerCreatedEvent> {
     
-    handle(event: ProductCreatedEvent): void {
+    handle(event: CustomerCreatedEvent): void {
         console.log("Esse é o primeiro console.log do evento: CustomerCreated");
     }
 }

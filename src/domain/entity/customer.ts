@@ -1,4 +1,5 @@
 import EventDispatcherInterface from "../event/@shared/event-dispatcher.interface";
+import CustomerCreatedEvent from "../event/customer/customer-created.event";
 import { Address } from "./address";
 
 export class Customer {
@@ -14,6 +15,10 @@ export class Customer {
         this._name = name;
         this._eventDispatcher = eventDispatcher;
         this.validate();
+        this._eventDispatcher.notify(new CustomerCreatedEvent({
+            id: id,
+            name: name
+        }));
     }
 
     get name (): string {

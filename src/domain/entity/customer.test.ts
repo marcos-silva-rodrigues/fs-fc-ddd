@@ -1,6 +1,8 @@
-import EventDispatcher from "../event/@shared/event-dispatcher";
 import { Address } from "./address";
 import { Customer } from "./customer";
+import EventDispatcher from "../event/@shared/event-dispatcher";
+import EnviaConsoleLog1Handler from "../event/customer/handler/envia-console-log-1.handler";
+import EnviaConsoleLog2Handler from "../event/customer/handler/envia-console-log-2.handler";
 
 describe("Customer unit tests", () => {
     it("should throw error when id is empty" , () => {
@@ -13,6 +15,22 @@ describe("Customer unit tests", () => {
         expect(() => {
             const customer = new Customer("213", "", new EventDispatcher());
         }).toThrow("Name is required");
+    });
+
+    it("should notify customer created" , () => {
+        const dispatcher = new EventDispatcher();
+        const enviaConsoleLog1Handler = new EnviaConsoleLog1Handler();
+        const enviaConsoleLog2Handler = new EnviaConsoleLog2Handler();
+        dispatcher.register("CustomerCreatedEvent", enviaConsoleLog1Handler);
+        dispatcher.register("CustomerCreatedEvent", enviaConsoleLog2Handler);
+
+        const spyHandler1 = jest.spyOn(enviaConsoleLog1Handler, "handle");
+        const spyHandler2 = jest.spyOn(enviaConsoleLog2Handler, "handle");
+
+        const customer = new Customer("213", "John", dispatcher);
+
+        expect(spyHandler1).toHaveBeenCalled();
+        expect(spyHandler2).toHaveBeenCalled();
     });
 
     it("should change name" , () => {
