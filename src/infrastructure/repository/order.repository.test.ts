@@ -11,6 +11,7 @@ import { Product } from "../../domain/entity/product";
 import { OrderItem } from "../../domain/entity/order_item";
 import { Order } from "../../domain/entity/order";
 import OrderRepository from "./order.repository";
+import EventDispatcher from "../../domain/event/@shared/event-dispatcher";
 
 describe("Order repository test", () => {
   let sequelize: Sequelize;
@@ -38,7 +39,7 @@ describe("Order repository test", () => {
 
   async function setupProductAndCustomer(): Promise<Product> {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("123", "Customer 1");
+    const customer = new Customer("123", "Customer 1", new EventDispatcher());
     const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
     customer.changeAddress(address);
     await customerRepository.create(customer);

@@ -3,6 +3,7 @@ import CustomerModel from "../db/sequelize/model/customer.model";
 import { Customer } from "../../domain/entity/customer";
 import { Address } from "../../domain/entity/address";
 import CustomerRepository from "./customer.repository";
+import EventDispatcher from "../../domain/event/@shared/event-dispatcher";
 
 describe("Customer repository test", () => {
   let sequelize: Sequelize;
@@ -25,7 +26,7 @@ describe("Customer repository test", () => {
 
   it("should create a customer", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("123", "Customer 1");
+    const customer = new Customer("123", "Customer 1", new EventDispatcher());
     const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
     customer.changeAddress(address);
     await customerRepository.create(customer);
@@ -46,7 +47,7 @@ describe("Customer repository test", () => {
 
   it("should update a customer", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("123", "Customer 1");
+    const customer = new Customer("123", "Customer 1", new EventDispatcher());
     const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
     customer.address = address;
     await customerRepository.create(customer);
@@ -69,7 +70,7 @@ describe("Customer repository test", () => {
 
   it("should find a customer", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("123", "Customer 1");
+    const customer = new Customer("123", "Customer 1", new EventDispatcher());
     const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
     customer.address = address;
     await customerRepository.create(customer);
@@ -89,13 +90,13 @@ describe("Customer repository test", () => {
 
   it("should find all customers", async () => {
     const customerRepository = new CustomerRepository();
-    const customer1 = new Customer("123", "Customer 1");
+    const customer1 = new Customer("123", "Customer 1", new EventDispatcher());
     const address1 = new Address("Street 1", 1, "Zipcode 1", "City 1");
     customer1.address = address1;
     customer1.addRewardPoints(10);
     customer1.activate();
 
-    const customer2 = new Customer("456", "Customer 2");
+    const customer2 = new Customer("456", "Customer 2", new EventDispatcher());
     const address2 = new Address("Street 2", 2, "Zipcode 2", "City 2");
     customer2.address = address2;
     customer2.addRewardPoints(20);

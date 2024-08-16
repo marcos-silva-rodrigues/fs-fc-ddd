@@ -1,3 +1,4 @@
+import EventDispatcherInterface from "../event/@shared/event-dispatcher.interface";
 import { Address } from "./address";
 
 export class Customer {
@@ -6,10 +7,12 @@ export class Customer {
     private _address!: Address;
     private _active: boolean = true;
     private _rewardPoints: number = 0;
+    private _eventDispatcher: EventDispatcherInterface;
 
-    constructor(id: string, name: string) {
+    constructor(id: string, name: string, eventDispatcher: EventDispatcherInterface) {
         this._id = id;
         this._name = name;
+        this._eventDispatcher = eventDispatcher;
         this.validate();
     }
 
