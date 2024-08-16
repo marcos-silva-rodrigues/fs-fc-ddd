@@ -3,6 +3,7 @@ import { Customer } from "./customer";
 import EventDispatcher from "../event/@shared/event-dispatcher";
 import EnviaConsoleLog1Handler from "../event/customer/handler/envia-console-log-1.handler";
 import EnviaConsoleLog2Handler from "../event/customer/handler/envia-console-log-2.handler";
+import EnviaConsoleLogHandler from "../event/customer/handler/envia-console-log.handler";
 
 describe("Customer unit tests", () => {
     it("should throw error when id is empty" , () => {
@@ -73,6 +74,18 @@ describe("Customer unit tests", () => {
 
         customer.addRewardPoints(10);
         expect(customer.rewardPoints).toBe(20);
+    });
+
+    it("should notify customer updated" , () => {
+        const dispatcher = new EventDispatcher();
+        const enviaConsoleLogHandler = new EnviaConsoleLogHandler();
+        dispatcher.register("CustomerUpdatedEvent", enviaConsoleLogHandler);
+
+        const spyHandler = jest.spyOn(enviaConsoleLogHandler, "handle");
+
+        const customer = new Customer("213", "John", dispatcher);
+        customer.changeAddress(new Address("Rua 1", 452, "09876-432", "São Paulo"));
+        expect(spyHandler).toHaveBeenCalled();
     });
 
 });

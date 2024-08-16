@@ -1,5 +1,6 @@
 import EventDispatcherInterface from "../event/@shared/event-dispatcher.interface";
 import CustomerCreatedEvent from "../event/customer/customer-created.event";
+import CustomerUpdatedEvent from "../event/customer/customer-updated.event";
 import { Address } from "./address";
 
 export class Customer {
@@ -59,6 +60,8 @@ export class Customer {
     changeAddress(address: Address) {
         this._address = address;
         this.validate()
+
+        this.notifyCustomerUpdated();
     }
 
     activate() {
@@ -78,5 +81,15 @@ export class Customer {
 
     addRewardPoints(points: number) {
         this._rewardPoints += points;
+    }
+
+    private notifyCustomerUpdated(): void {
+        const data = {
+            id: this._id,
+            name: this._name,
+            endereco: `${this._address.street} ${this._address.number}, ${this._address.city} ${this._address.zip}`
+        }
+
+        this._eventDispatcher.notify(new CustomerUpdatedEvent(data));
     }
 }
