@@ -1,7 +1,7 @@
 import ProductRepositoryInterface from "../../../domain/product/repository/product-repository.interface";
 
 export default class MockProductRepository {
-    static productRepository(extended : Map<FunctionType, jest.Mock>): ProductRepositoryInterface {
+    static productRepository(extended ?: Map<FunctionType, jest.Mock>): ProductRepositoryInterface {
         return {
             create: getImplementation(extended, "create"),
             find: getImplementation(extended, "find"),
