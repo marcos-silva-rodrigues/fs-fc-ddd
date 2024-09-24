@@ -39,7 +39,6 @@ describe("Integration test find a product", () => {
             id: "123"
         }
         const output = await usecase.execute(input);
-        console.log(output)
         expect(output).toEqual({
             id: "123",
             name: "Product 1",

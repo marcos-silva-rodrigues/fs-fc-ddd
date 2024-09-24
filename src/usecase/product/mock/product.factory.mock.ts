@@ -3,6 +3,6 @@ import ProductFactory from "../../../domain/product/factory/product.factory";
 
 export default class MockProductFactory {
     static getProduct(): ProductInterface {
-        return ProductFactory.create("a", "Produc 1", 10);
+        return ProductFactory.create("a", "Product 1", 10);
     }
 }
