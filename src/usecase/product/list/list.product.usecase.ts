@@ -1,7 +1,7 @@
 
 import ProductInterface from "../../../domain/product/entity/product.interface";
 import { AbstractProductUseCase } from "../product.usecase.abstract";
-import { InputListProductDto, OutputListProductDto } from "./list.product.dto";
+import { InputListProductDto, OutputListProductDto } from "./list.product.usecase.dto";
 
 export class ListProductsUseCase
     extends AbstractProductUseCase<InputListProductDto, OutputListProductDto> {

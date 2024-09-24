@@ -1,6 +1,6 @@
 import ProductFactory from "../../../domain/product/factory/product.factory";
 import { AbstractProductUseCase } from "../product.usecase.abstract";
-import { InputProductDto, OutputProductDto } from "./create.product.dto";
+import { InputProductDto, OutputProductDto } from "./create.product.usecase.dto";
 
 export default class CreateProductUseCase 
     extends AbstractProductUseCase<InputProductDto, OutputProductDto> {

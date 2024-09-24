@@ -1,5 +1,5 @@
 import { AbstractProductUseCase } from "../product.usecase.abstract";
-import { InputFindProductDto, OutputFindProductDto } from "./find.product.dto";
+import { InputFindProductDto, OutputFindProductDto } from "./find.product.usecase.dto";
 
 export default class FindProductUseCase
     extends AbstractProductUseCase<InputFindProductDto, OutputFindProductDto> {

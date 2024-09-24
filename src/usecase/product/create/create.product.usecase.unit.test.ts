@@ -1,5 +1,5 @@
-import CreateProductUseCase from "./create.customer.usecase";
-import MockProductRepository from "../mock/product.repository.mock";
+import CreateProductUseCase from "./create.product.usecase";
+import MockProductRepository from "../_mock/product.repository.mock";
 
 
 describe("Unit test create a product", () => {

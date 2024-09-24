@@ -1,7 +1,7 @@
 
 import { Sequelize } from "sequelize-typescript";
-import MockProductFactory from "../mock/product.factory.mock";
-import MockProductRepository from "../mock/product.repository.mock";
+import MockProductFactory from "../_mock/product.factory.mock";
+import MockProductRepository from "../_mock/product.repository.mock";
 import FindProductUseCase from "./find.product.usecase";
 import ProductModel from "../../../infrastructure/product/repository/sequelize/product.model";
 import ProductRepository from "../../../infrastructure/product/repository/sequelize/product.repository";

@@ -1,5 +1,5 @@
-import MockProductFactory from "../mock/product.factory.mock";
-import MockProductRepository from "../mock/product.repository.mock";
+import MockProductFactory from "../_mock/product.factory.mock";
+import MockProductRepository from "../_mock/product.repository.mock";
 import { ListProductsUseCase } from "./list.product.usecase";
 
 describe("Unit test list products usecase" ,() => {
