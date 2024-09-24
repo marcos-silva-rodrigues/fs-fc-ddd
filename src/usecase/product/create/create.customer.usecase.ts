@@ -1,16 +1,13 @@
 import ProductFactory from "../../../domain/product/factory/product.factory";
-import ProductRepositoryInterface from "../../../domain/product/repository/product-repository.interface";
+import { AbstractProductUseCase } from "../product.usecase.abstract";
 import { InputProductDto, OutputProductDto } from "./create.product.dto";
 
-export default class CreateProductUseCase {
-    constructor(
-        private productRepository: ProductRepositoryInterface
-    ) {
-    }
+export default class CreateProductUseCase 
+    extends AbstractProductUseCase<InputProductDto, OutputProductDto> {
 
     async execute(input: InputProductDto): Promise<OutputProductDto> {
         const product = ProductFactory.create("a", input.name, input.price);
-        await this.productRepository.create(product);
+        await this.repository.create(product);
 
         return {
             id: product.id,
