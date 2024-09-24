@@ -12,7 +12,7 @@ describe("E2E test for customer", () => {
 
     it("should create a customer", async () => {
         const response = await request(app)
-            .post("/customer")
+            .post("/customers")
             .send({
                 name: "Jhon",
                 address: {
@@ -33,7 +33,7 @@ describe("E2E test for customer", () => {
 
     it("should not create a customer", async () => {
         const response = await request(app)
-            .post("/customer")
+            .post("/customers")
             .send({
                 name: "",
                 address: {
@@ -50,7 +50,7 @@ describe("E2E test for customer", () => {
 
     it("should list all customer", async () => {
         const response = await request(app)
-            .post("/customer")
+            .post("/customers")
             .send({
                 name: "Jhon",
                 address: {
@@ -69,7 +69,7 @@ describe("E2E test for customer", () => {
         expect(response.body.address.zip).toBe("123454");
 
         const response2 = await request(app)
-            .post("/customer")
+            .post("/customers")
             .send({
                 name: "Jhon 2",
                 address: {
@@ -88,7 +88,7 @@ describe("E2E test for customer", () => {
         expect(response2.body.address.zip).toBe("43215");
 
         const listResponse = await request(app)
-            .get("/customer")
+            .get("/customers")
             .send();
         console.log(listResponse.body)
 
