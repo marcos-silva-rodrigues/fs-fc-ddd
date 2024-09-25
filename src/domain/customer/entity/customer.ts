@@ -3,6 +3,8 @@ import EventDispatcherInterface from "../../@shared/event/event-dispatcher.inter
 import NotificationError from "../../@shared/notification/notification.error";
 import CustomerCreatedEvent from "../event/customer-created.event";
 import CustomerUpdatedEvent from "../event/customer-updated.event";
+import CustomerValidatorFactory from "../factory/customer.validator.factory";
+import CustomerVAlidatorFactory from "../factory/customer.validator.factory";
 import { Address } from "../value-object/address";
 
 export class Customer extends Entity {
@@ -44,20 +46,10 @@ export class Customer extends Entity {
         this._address = address;
     }
 
-    validate(){
-        if(this.id.length === 0) {
-            this.notification.addError({
-                context: "customer",
-                message: "Id is required"
-            });
-        }
-
-        if(this._name.length === 0) {
-            this.notification.addError({
-                context: "customer",
-                message: "Name is required"
-            });
-        }
+    validate() {
+        CustomerValidatorFactory
+            .create()
+            .validate(this);
     }
 
     changeName(name: string) {
