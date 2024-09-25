@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import ProductRepository from "../../product/repository/sequelize/product.repository";
 import { ListProductsUseCase } from "../../../usecase/product/list/list.product.usecase";
 import CreateProductUseCase from "../../../usecase/product/create/create.product.usecase";
+import NotificationError from "../../../domain/@shared/notification/notification.error";
 
 export const productRoute = express.Router();
 
@@ -16,8 +17,8 @@ productRoute.post("/", async (req: Request, res: Response) => {
         const output = await usecase.execute(input);
         return res.status(201).send(output);
     } catch (err) {
-        const { message } = err as Error;
-        res.status(500).send(message);
+        const { errors } = err as NotificationError;
+        res.status(500).json({errors});
     }
 })
 

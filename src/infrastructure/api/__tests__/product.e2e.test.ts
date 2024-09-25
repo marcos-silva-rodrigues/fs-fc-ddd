@@ -19,7 +19,10 @@ describe("E2E test for customer", () => {
             });
 
         expect(response.status).toBe(500);
-        expect(response.text).toBe("Name is required");
+        expect(response.body.errors).toEqual([{
+            context: "product",
+            message: "Name is required"
+        }]);
     })
 
 
@@ -32,7 +35,32 @@ describe("E2E test for customer", () => {
             });
 
         expect(response.status).toBe(500);
-        expect(response.text).toBe("Price must be greater than 0");
+        expect(response.body.errors).toEqual([{
+            context: "product",
+            message: "Price must be greater than 0"
+        }]);
+    })
+
+    it("should not create a product with invalid name and price", async () => {
+        const response = await request(app)
+            .post("/products")
+            .send({
+                name: "",
+                price: 0
+            });
+
+        expect(response.status).toBe(500);
+        expect(response.body.errors.length).toBe(2);
+
+        expect(response.body.errors[0]).toEqual({
+            context: "product",
+            message: "Name is required"
+        });
+
+        expect(response.body.errors[1]).toEqual({
+            context: "product",
+            message: "Price must be greater than 0"
+        });
     })
 
     it("should create a product", async () => {

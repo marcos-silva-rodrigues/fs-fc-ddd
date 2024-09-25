@@ -37,7 +37,7 @@ describe("Unit test update a product", () => {
 
         expect(() => {
             return usecase.execute(input);
-        }).rejects.toThrow("Name is required");
+        }).rejects.toThrow("product: Name is required");
         
     });
 
@@ -55,7 +55,7 @@ describe("Unit test update a product", () => {
         }
         expect(() => {
             return usecase.execute(input);
-        }).rejects.toThrow("Price must be greater than 0");
+        }).rejects.toThrow("product: Price must be greater than 0");
     });
 
     it("should update a product", async () => {

@@ -4,20 +4,26 @@ describe("Product unit tests", () => {
     it("should throw error when id is empty" , () => {
         expect(() => {
             const product = new Product("", "Product 1", 100);
-        }).toThrow("Id is required");
+        }).toThrow("product: Id is required");
     });
 
     it("should throw error when name is empty" , () => {
         expect(() => {
             const product = new Product("p1", "", 100);
-        }).toThrow("Name is required");
+        }).toThrow("product: Name is required");
     });
 
     
     it("should throw error when price is less than 0" , () => {
         expect(() => {
             const product = new Product("p1", "Product 1", 0);
-        }).toThrow("Price must be greater than 0");
+        }).toThrow("product: Price must be greater than 0");
+    });
+
+    it("should throw error when name and price is invalid" , () => {
+        expect(() => {
+            const product = new Product("p1", "", -10);
+        }).toThrow("product: Name is required,product: Price must be greater than 0");
     });
 
     it("should change name" , () => {
