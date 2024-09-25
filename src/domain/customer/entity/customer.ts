@@ -1,10 +1,11 @@
+import Entity from "../../@shared/entity/entity.abstract";
 import EventDispatcherInterface from "../../@shared/event/event-dispatcher.interface";
+import NotificationError from "../../@shared/notification/notification.error";
 import CustomerCreatedEvent from "../event/customer-created.event";
 import CustomerUpdatedEvent from "../event/customer-updated.event";
 import { Address } from "../value-object/address";
 
-export class Customer {
-    private _id: string;
+export class Customer extends Entity {
     private _name: string;
     private _address!: Address;
     private _active: boolean = true;
@@ -12,7 +13,8 @@ export class Customer {
     private _eventDispatcher: EventDispatcherInterface;
 
     constructor(id: string, name: string, eventDispatcher: EventDispatcherInterface) {
-        this._id = id;
+        super();
+        this.id = id;
         this._name = name;
         this._eventDispatcher = eventDispatcher;
         this.validate();
@@ -20,14 +22,14 @@ export class Customer {
             id: id,
             name: name
         }));
+
+        if(this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.getErrors());
+        }
     }
 
     get name (): string {
         return this._name;
-    }
-
-    get id (): string {
-        return this._id;
     }
 
     get address(): Address {
@@ -43,12 +45,18 @@ export class Customer {
     }
 
     validate(){
-        if(this._id.length === 0) {
-            throw new Error("Id is required");
+        if(this.id.length === 0) {
+            this.notification.addError({
+                context: "customer",
+                message: "Id is required"
+            });
         }
 
         if(this._name.length === 0) {
-            throw new Error("Name is required");
+            this.notification.addError({
+                context: "customer",
+                message: "Name is required"
+            });
         }
     }
 
@@ -85,7 +93,7 @@ export class Customer {
 
     private notifyCustomerUpdated(): void {
         const data = {
-            id: this._id,
+            id: this.id,
             name: this._name,
             endereco: `${this._address.street} ${this._address.number}, ${this._address.city} ${this._address.zip}`
         }

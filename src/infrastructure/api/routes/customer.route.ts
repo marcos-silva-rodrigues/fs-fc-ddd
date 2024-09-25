@@ -3,6 +3,7 @@ import CreateCustomerUseCase from "../../../usecase/customer/create/create.custo
 import CustomerRepository from "../../customer/repository/sequelize/customer.repository";
 import ListCustomerUseCase from "../../../usecase/customer/list/list.customer.usecase";
 import ProductRepository from "../../product/repository/sequelize/product.repository";
+import NotificationError from "../../../domain/@shared/notification/notification.error";
 
 export const customerRoute = express.Router();
 
@@ -23,8 +24,8 @@ customerRoute.post("/", async (req: Request, res: Response) => {
         const output = await usecase.execute(customerDto);
         res.status(201).send(output);
     } catch (err) {
-        const { message } = err as Error;
-        res.status(500).send(message);
+        const { errors } = err as NotificationError;
+        res.status(500).json({errors});
     }
 })
 

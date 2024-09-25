@@ -9,13 +9,13 @@ describe("Customer unit tests", () => {
     it("should throw error when id is empty" , () => {
         expect(() => {
             const customer = new Customer("", "Jown", new EventDispatcher());
-        }).toThrow("Id is required");
+        }).toThrow("customer: Id is required");
     });
 
     it("should throw error when name is empty" , () => {
         expect(() => {
             const customer = new Customer("213", "", new EventDispatcher());
-        }).toThrow("Name is required");
+        }).toThrow("customer: Name is required");
     });
 
     it("should notify customer created" , () => {

@@ -1,39 +1,36 @@
-export type NotificationError = {
+export type NotificationErrorProps = {
     message: string;
     context: string;
 }
 
 export default class Notification {
-    private errors: Map<string, string[]> = new Map();
+    private errors: NotificationErrorProps[] = [];
 
-    addError(error: NotificationError) {
-        if(this.errors.has(error.context)) {
-            const value = this.errors.get(error.context);
-            value.push(error.message);
-            this.errors.set(error.context, value);
-        } else {
-            this.errors.set(error.context, [error.message]);
-        }
+    addError(error: NotificationErrorProps) {
+        this.errors.push(error);
+    }
+
+    hasErrors(): boolean {
+        return this.errors.length > 0;
+    }
+
+    getErrors(): NotificationErrorProps[] {
+        return this.errors;
     }
 
     messages(context?: string) { 
         if (context) {
-            const messages = this.errors.get(context)
-            return this.makeMessage(context, messages)
+            return this.errors
+                .filter(error => error.context === context)
+                .reduce(this.makeMessage, "");
         }
 
-        let messages = "";
-        this.errors.forEach((value, key) => {
-            messages += this.makeMessage(key, value)
-        })
-
-        return messages
+        return this.errors.reduce(this.makeMessage, "");
         
     }
 
-    private makeMessage(context: string, messages: string[]) {
-        return messages.reduce((acc, value) => 
-            acc + `${context}: ${value},`, "");
+    private makeMessage(acc: string, props: NotificationErrorProps): string {
+        return acc + `${props.context}: ${props.message},`
     }
 
 }

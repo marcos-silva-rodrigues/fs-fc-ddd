@@ -45,7 +45,7 @@ describe("E2E test for customer", () => {
             });
 
         expect(response.status).toBe(500);
-        expect(response.text).toBe("Name is required");
+        expect(response.body.errors).toEqual([{context: "customer", message: "Name is required"}]);
     })
 
     it("should list all customer", async () => {

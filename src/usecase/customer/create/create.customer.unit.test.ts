@@ -1,3 +1,4 @@
+import NotificationError from "../../../domain/@shared/notification/notification.error";
 import CustomerRepositoryInterface from "../../../domain/customer/repository/customer-repository.interface"
 import CreateCustomerUseCase from "./create.customer.usecase";
 
@@ -43,10 +44,10 @@ describe("Unit test create a customer", () => {
         const customerCreateUseCase = new CreateCustomerUseCase(customerRepository);
 
         input.name = "";
-
+        
         expect(() => {
             return customerCreateUseCase.execute(input)
-        }).rejects.toThrow("Name is required")
+        }).rejects.toThrow("customer: Name is required")
     })
 
     it("should thrown an error when street is missing", async () => {
